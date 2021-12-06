@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/tdlight-bot-downloader-0.1.jar
+web: java $JAVA_OPTS -jar target\tg-bot-downloader-0.1-spring-boot.jar
