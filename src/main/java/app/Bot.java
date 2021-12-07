@@ -24,7 +24,7 @@ public class Bot extends TelegramBot {
     private String command;
 
     public Bot() {
-        super("API");
+        super(System.getenv("TOKEN"));
         bot = this;
         setUpdatesListener(this::onUpdate);
     }
