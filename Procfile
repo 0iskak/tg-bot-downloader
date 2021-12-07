@@ -1,1 +1,1 @@
-bot: java $JAVA_OPTS -jar target/tg-bot-downloader-0.1-spring-boot.jar
+bot: java $JAVA_OPTS -Xmx300m -Xss512k -XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -cp ./target/classes:./target/dependency/* app.App
