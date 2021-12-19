@@ -15,8 +15,11 @@ public abstract class Downloader extends Command {
         Downloading.setDownloaded(true);
 
         switch (type) {
-            case AUDIO -> execute(new SendAudio(bot.getId(), file));
-            case VIDEO -> execute(new SendVideo(bot.getId(), file));
+            case AUDIO:
+                execute(new SendAudio(bot.getId(), file));
+                break;
+            case VIDEO:
+                execute(new SendVideo(bot.getId(), file));
         }
 
         Downloading.setSent(true);

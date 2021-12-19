@@ -4,9 +4,7 @@ public class Start extends Message {
     public final static String command = "/start";
 
     public Start() {
-        send(String.format("""
-                Telegram downloader bot:
-                type %s to see commands
-                """, Help.command));
+        send(String.format(" Telegram downloader bot:\n" +
+                        "type %s to see commands", Help.command));
     }
 }

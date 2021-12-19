@@ -18,12 +18,10 @@ import java.util.UUID;
 
 public class Youtube extends Downloader {
     public static final String command = "/yt";
-    public static final String help = String.format("""
-            Youtube downloader:
-            %1$s URL - download best video with sound
-            %1$s URL %2$s - list available formats
-            %1$s URL (a/v)number - download specific format
-            """, command, format);
+    public static final String help = String.format("Youtube downloader:\n" +
+            "%1$s URL - download best video with sound\n" +
+            "%1$s URL %2$s - list available formats\n" +
+            "%1$s URL (a/v)number - download specific format", command, format);
 
     private final YoutubeDownloader downloader = new YoutubeDownloader();
     private final File saveDir = new File(savePath);
@@ -34,16 +32,21 @@ public class Youtube extends Downloader {
     public Youtube() {
         var argsLength = bot.getArgs().length;
         switch (argsLength) {
-            case 1 -> new Custom(help);
-            case 2, 3 -> {
+            case 1:
+                new Custom(help);
+                break;
+            case 2:
+            case 3:
                 var url = bot.getArgs()[1];
                 if (getInfo()) {
                     new InvalidURL(url);
                     return;
                 }
                 switch (argsLength) {
-                    case 2 -> send(info.bestVideoWithAudioFormat(), Type.VIDEO);
-                    case 3 -> {
+                    case 2:
+                        send(info.bestVideoWithAudioFormat(), Type.VIDEO);
+                        break;
+                    case 3:
                         var arg = bot.getArgs()[2];
                         if (format.equals(arg)) {
                             new Custom(listFormats());
@@ -56,14 +59,17 @@ public class Youtube extends Downloader {
                                 return;
                             }
                             switch (arg.charAt(0)) {
-                                case 'a' -> send(info.audioFormats().get(no), Type.AUDIO);
-                                case 'v' -> send(info.videoFormats().get(no), Type.VIDEO);
-                                default -> new InvalidArgs();
+                                case 'a':
+                                    send(info.audioFormats().get(no), Type.AUDIO);
+                                    break;
+                                case 'v':
+                                    send(info.videoFormats().get(no), Type.VIDEO);
+                                    break;
+                                default:
+                                    new InvalidArgs();
                             }
                         }
-                    }
                 }
-            }
         }
 
     }
@@ -81,12 +87,14 @@ public class Youtube extends Downloader {
     private String toString(Format format) {
         String quality = " ";
 
-        if (format instanceof AudioFormat a) {
+        if (format instanceof AudioFormat) {
+            var a = (AudioFormat) format;
             quality += a.audioSampleRate() + "Hz";
 
             if (a.equals(info.bestAudioFormat()))
                 quality += " (best)";
-        } else if (format instanceof VideoFormat v) {
+        } else if (format instanceof VideoFormat) {
+            var v = (VideoFormat) format;
             quality += v.qualityLabel();
 
             if (v.equals(info.bestVideoWithAudioFormat()))

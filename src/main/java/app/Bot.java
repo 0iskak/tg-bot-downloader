@@ -45,17 +45,22 @@ public class Bot extends TelegramBot {
         }
 
         id = message.chat().id();
-        args = message.text().split("\s+");
+        args = message.text().split("\\s+");
         command = args[0];
 
         switch (command) {
-            case Start.command -> new Start();
-            case Help.command -> new Help();
-            case Youtube.command -> new Youtube();
-            default -> {
+            case Start.command:
+                new Start();
+                break;
+            case Help.command:
+                new Help();
+                break;
+            case Youtube.command:
+                new Youtube();
+                break;
+            default:
                 if (command.startsWith("/"))
                     new CommandNotFound();
-            }
         }
     }
 }
